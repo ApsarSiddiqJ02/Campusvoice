@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CampusVoice | Student suggestions for a better campus</title>
+<meta name="description" content="CampusVoice lets students share ideas, vote on suggestions and track progress on canteen, transport, library, Wi-Fi, washrooms, cleanliness and cultural events.">
+<meta name="theme-color" content="#16223B">
+<meta property="og:title" content="CampusVoice: your campus, your ideas">
+<meta property="og:description" content="Share suggestions, vote, and follow each idea from Pending to Completed.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F5F9;--surface:#FFFFFF;--ink:#16223B;--muted:#5A6479;--line:#DCE1EB;--brand:#16223B;--brand-ink:#FFFFFF;--accent:#F2A900;--accent-ink:#2A1F00;
+--pending:#6B7280;--pending-bg:#E8EAEF;--review:#8A5A00;--review-bg:#FFF0C7;--approved:#0B6E8A;--approved-bg:#D6F0F8;--done:#17703F;--done-bg:#D5F2E1;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1626;--surface:#18223A;--ink:#EEF1F8;--muted:#A3ADC4;--line:#2B3856;--brand:#F2A900;--brand-ink:#2A1F00;--accent:#F2A900;
+--pending:#C4CAD8;--pending-bg:#2B3450;--review:#FFD36B;--review-bg:#3C3213;--approved:#7FD3EC;--approved-bg:#10343F;--done:#7FE0A8;--done-bg:#133323}}
+:root[data-theme="dark"]{--bg:#0F1626;--surface:#18223A;--ink:#EEF1F8;--muted:#A3ADC4;--line:#2B3856;--brand:#F2A900;--brand-ink:#2A1F00;--accent:#F2A900;
+--pending:#C4CAD8;--pending-bg:#2B3450;--review:#FFD36B;--review-bg:#3C3213;--approved:#7FD3EC;--approved-bg:#10343F;--done:#7FE0A8;--done-bg:#133323}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5}
+h1,h2,h3{font-family:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;margin:0;line-height:1.15}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{background:var(--surface);color:var(--ink);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.bar{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.logo{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:transparent;border:0;color:var(--muted);padding:9px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+nav button:hover{color:var(--ink)}
+nav button[aria-current="page"]{background:var(--bg);color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+main{max-width:1080px;margin:0 auto;padding:20px 16px 56px}
+.hero{background:var(--surface);border:1px solid var(--line);border-top:6px solid var(--accent);border-radius:20px;padding:44px 32px 28px;margin:4px 0 18px;text-align:center}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:8px;top:8px;background:var(--accent);color:#2A1F00;padding:8px 14px;border-radius:8px;z-index:30}
+.role{font-size:.78rem;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:3px 10px;color:var(--muted);margin-right:auto}
+.hbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.hero .btn{padding:13px 24px;border-radius:999px}
+.hero .btn.alt{background:var(--surface)}
+.hstats{display:flex;gap:36px;flex-wrap:wrap;justify-content:center;margin-top:30px;padding-top:20px;border-top:1px solid var(--line)}
+.hstats b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.8rem;display:block;line-height:1.1}
+.hstats span{color:var(--muted);font-size:.9rem}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:0 0 26px}
+.steps div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.steps b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#2A1F00;margin-bottom:8px}
+.steps h3{font-size:1rem}
+.steps p{margin:4px 0 0;color:var(--muted);font-size:.92rem}
+.sec{font-size:1.4rem}
+.count{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:1px 10px;font-size:.9rem;font-family:"Figtree",sans-serif;font-weight:600;color:var(--muted);vertical-align:middle}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:-.02em;max-width:16ch}
+.hero p{color:var(--muted);max-width:54ch;margin:14px auto 22px;font-size:1.05rem}
+.hero h1{margin-left:auto;margin-right:auto}
+.btn{background:var(--brand);color:var(--brand-ink);border:0;border-radius:10px;padding:11px 18px;font-weight:600;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+input.search{background:var(--surface);padding:12px 16px;margin-top:6px;border-radius:999px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;margin:8px 0}
+.chip{white-space:nowrap;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.toolbar select{background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:7px 10px}
+.list{display:grid;gap:12px;margin-top:8px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;grid-template-columns:auto 1fr;gap:14px}
+.vote{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:54px;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:8px 6px;cursor:pointer;font-weight:700}
+.vote[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.vote span{font-size:.75rem;font-weight:500}
+.card h3{font-size:1.1rem}
+.card p{margin:6px 0 10px;color:var(--muted)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:var(--muted)}
+.tag{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+.status{border-radius:999px;padding:2px 12px 2px 10px;font-weight:600;font-size:.82rem}
+.status::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:7px}
+.card{transition:box-shadow .2s}
+.card:hover{box-shadow:0 8px 22px rgba(22,34,59,.1)}
+.s-Pending{background:var(--pending-bg);color:var(--pending)}
+.s-Under-Review{background:var(--review-bg);color:var(--review)}
+.s-Approved{background:var(--approved-bg);color:var(--approved)}
+.s-Completed{background:var(--done-bg);color:var(--done)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;max-width:620px}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input[type=text],input[type=password],select.f,textarea{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:110px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-weight:500}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+.hint{color:var(--muted);font-size:.88rem;margin:4px 0 0}
+.err{color:#C0392B;font-size:.88rem;margin-top:6px;min-height:1.2em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:12px 0 18px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat b{font-family:"Bricolage Grotesque",sans-serif;font-size:2rem;display:block;line-height:1}
+.stat span{color:var(--muted);font-size:.88rem}
+.wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);font-size:.93rem}
+th{color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td select{background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:5px 8px}
+.bars{display:grid;gap:8px;margin:0 0 18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.bar-row{display:grid;grid-template-columns:96px 1fr 28px;gap:10px;align-items:center;font-size:.9rem}
+.track{background:var(--bg);border-radius:6px;height:12px;overflow:hidden}
+.fill{background:var(--accent);height:100%;border-radius:6px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--brand);color:var(--brand-ink);padding:11px 18px;border-radius:10px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.toast.on{opacity:1}
+.empty{padding:28px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:14px}
+footer{background:var(--surface);border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;padding:28px 16px 18px}
+.fin{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.fin p{margin:6px 0 0;max-width:36ch}
+.fin strong,footer .logo{color:var(--ink)}
+.fbot{max-width:1080px;margin:22px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem}
+@media (max-width:520px){.card{grid-template-columns:1fr}.vote{flex-direction:row;justify-content:center;gap:8px;width:100%}.bar-row{grid-template-columns:80px 1fr 24px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#app">Skip to content</a>
+<header><div class="bar"><div class="logo"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#16223B"/><path d="M8 10h16v9H15l-5 4v-4H8z" fill="#F2A900"/></svg>CampusVoice</div>
+<span class="role" id="role"></span>
+<nav aria-label="Main">
+<button data-v="browse" aria-current="page">Suggestions</button>
+<button data-v="submit">Share an idea</button>
+<button data-v="mine">My ideas</button>
+<button data-v="admin">Admin</button>
+<button data-v="login">Log in</button>
+</nav></div></header>
+<main id="app"></main>
+<footer><div class="fin"><div><div class="logo">CampusVoice</div><p>A student-led space to improve campus life, one idea at a time.</p></div><div><strong>Contact</strong><p>Student Council Office, Block A<br>council@college.example</p></div></div><div class="fbot">© 2026 CampusVoice. Prototype for demonstration; all suggestions are sample data.</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+var CATS=["Canteen","Transport","Washrooms","Library","Wi-Fi","Cleanliness","Cultural events"];
+var STATUSES=["Pending","Under Review","Approved","Completed"];
+var items=[
+{id:1,t:"Add more charging points in the library",d:"Most seats on the second floor have no sockets, so laptops die during long study sessions.",c:"Library",s:"Approved",v:128,by:"Ananya R.",day:"2 days ago"},
+{id:2,t:"Wi-Fi drops in the hostel-side block",d:"Signal is very weak near the labs behind the main building, especially after 4 pm.",c:"Wi-Fi",s:"Under Review",v:97,by:"Anonymous",day:"4 days ago"},
+{id:3,t:"Extra bus trip after evening practicals",d:"The last bus leaves at 4:30 pm, but many labs run until 5:30 pm.",c:"Transport",s:"Pending",v:84,by:"You",day:"5 days ago",mine:true},
+{id:4,t:"Healthier options at the canteen",d:"Please add fruit bowls, sprouts and a low-oil meal each day.",c:"Canteen",s:"Completed",v:76,by:"Anonymous",day:"2 weeks ago"},
+{id:5,t:"Soap and tissue refills in washrooms",d:"Dispensers on the ground floor are often empty by noon.",c:"Washrooms",s:"Under Review",v:71,by:"Anonymous",day:"1 week ago",mine:true},
+{id:6,t:"Open-mic evening every month",d:"A relaxed stage for music, poetry and stand-up for all departments.",c:"Cultural events",s:"Approved",v:64,by:"Meera S.",day:"6 days ago"},
+{id:7,t:"More dustbins near the sports ground",d:"Wrappers and bottles pile up near the seating area after matches.",c:"Cleanliness",s:"Pending",v:41,by:"Karan P.",day:"3 days ago"}];
+var ICON={"All":"✨","Canteen":"🍽️","Transport":"🚌","Washrooms":"🚻","Library":"📚","Wi-Fi":"📶","Cleanliness":"🧹","Cultural events":"🎭"},afilter="All",query="",user=null,voted={},view="browse",filter="All",sort="top",nextId=8;
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function cls(s){return"s-"+s.replace(" ","-")}
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.className="toast on";setTimeout(function(){t.className="toast"},2200)}
+function go(v){if(v==="login"&&user){user=null;toast("Logged out");v="browse"}view=v;document.querySelectorAll("nav button").forEach(function(b){if(b.dataset.v===v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});render();window.scrollTo(0,0)}
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){go(b.dataset.v)}});
+
+function browse(){
+ var list=items.filter(function(i){return (filter==="All"||i.c===filter)&&(!query||(i.t+" "+i.d).toLowerCase().indexOf(query.toLowerCase())>-1)});
+ list.sort(function(a,b){return sort==="top"?b.v-a.v:b.id-a.id});
+ var chips=["All"].concat(CATS).map(function(c){return'<button class="chip" data-f="'+c+'" aria-pressed="'+(c===filter)+'">'+ICON[c]+' '+c+'</button>'}).join("");
+ var cards=list.map(function(i){return'<article class="card"><button class="vote" data-vote="'+i.id+'" aria-pressed="'+!!voted[i.id]+'" aria-label="Upvote, '+i.v+' votes">▲ '+i.v+'<span>votes</span></button><div><h3>'+esc(i.t)+'</h3><p>'+esc(i.d)+'</p><div class="meta"><span class="status '+cls(i.s)+'">'+i.s+'</span><span class="tag">'+i.c+'</span><span>'+esc(i.by)+', '+i.day+'</span></div></div></article>'}).join("");
+ return'<section class="hero"><h1>Your campus, your ideas.</h1><p>Share what would make college better, back the ideas you agree with, and follow each one from Pending to Completed.</p><div class="hbtns"><button class="btn" data-go="submit">Share an idea</button><button class="btn alt" data-go="mine">See my ideas</button></div><div class="hstats"><div><b>'+items.length+'</b><span>suggestions</span></div><div><b>'+items.reduce(function(s,i){return s+i.v},0)+'</b><span>votes cast</span></div><div><b>'+items.filter(function(i){return i.s==="Completed"}).length+'</b><span>completed</span></div></div></section><div class="steps"><div><b>1</b><h3>Share</h3><p>Post an idea, openly or anonymously.</p></div><div><b>2</b><h3>Vote</h3><p>Back the ideas that matter to you.</p></div><div><b>3</b><h3>Track</h3><p>Follow it from Pending to Completed.</p></div></div>'+
+ '<input type="text" class="search" id="q" placeholder="Search suggestions" aria-label="Search suggestions" value="'+esc(query)+'">'+'<div class="chips" role="group" aria-label="Filter by topic">'+chips+'</div>'+
+ '<div class="toolbar"><h2 class="sec">Campus suggestions <span class="count">'+list.length+'</span></h2><label style="margin:0;font-weight:500">Sort by <select id="sort"><option value="top"'+(sort==="top"?" selected":"")+'>Most votes</option><option value="new"'+(sort==="new"?" selected":"")+'>Newest</option></select></label></div>'+
+ '<div class="list">'+(cards||'<div class="empty">No suggestions match. Try another word or topic, or share a new idea.</div>')+'</div>';
+}
+function submit(){
+ return'<h2 style="margin:12px 0 14px">Share an idea</h2><form class="panel" id="f" novalidate><label for="t">Title</label><input type="text" id="t" maxlength="80" placeholder="e.g. Longer library hours during exams"><label for="c">Topic</label><select class="f" id="c">'+CATS.map(function(c){return'<option>'+c+'</option>'}).join("")+'</select><label for="d">What should change, and why?</label><textarea id="d" placeholder="Describe the problem and your suggested fix"></textarea><label class="check" for="a"><input type="checkbox" id="a"><span>Post anonymously<p class="hint" style="font-weight:400">Your name won’t be shown on the suggestion.</p></span></label><div class="err" id="e" role="alert"></div><button class="btn" type="submit" style="margin-top:6px">Submit suggestion</button></form>';
+}
+function admin(){
+ var counts={};STATUSES.forEach(function(s){counts[s]=items.filter(function(i){return i.s===s}).length});
+ var max=Math.max.apply(null,CATS.map(function(c){return items.filter(function(i){return i.c===c}).length}))||1;
+ var stats='<div class="stats"><div class="stat"><b>'+items.length+'</b><span>Total suggestions</span></div>'+STATUSES.map(function(s){return'<div class="stat"><b>'+counts[s]+'</b><span>'+s+'</span></div>'}).join("")+'</div>';
+ var bars='<div class="bars"><strong>Suggestions by topic</strong>'+CATS.map(function(c){var n=items.filter(function(i){return i.c===c}).length;return'<div class="bar-row"><span>'+c+'</span><div class="track"><div class="fill" style="width:'+(n/max*100)+'%"></div></div><span>'+n+'</span></div>'}).join("")+'</div>';
+ var rows=items.slice().filter(function(i){return afilter==="All"||i.s===afilter}).sort(function(a,b){return b.v-a.v}).map(function(i){return'<tr><td>'+esc(i.t)+'</td><td>'+i.c+'</td><td>'+i.v+'</td><td><select data-st="'+i.id+'" aria-label="Status for '+esc(i.t)+'">'+STATUSES.map(function(s){return'<option'+(s===i.s?" selected":"")+'>'+s+'</option>'}).join("")+'</select></td></tr>'}).join("");
+ return'<h2 style="margin:12px 0 4px">Admin dashboard</h2><p class="hint" style="margin-bottom:6px">Change a status and it updates on the student view too.</p>'+stats+bars+'<div class="toolbar" style="margin-bottom:10px"><h2 class="sec">All suggestions</h2><label style="margin:0;font-weight:500">Status <select id="af">'+["All"].concat(STATUSES).map(function(s){return'<option'+(s===afilter?" selected":"")+'>'+s+'</option>'}).join("")+'</select></label></div><div class="wrap"><table><thead><tr><th>Suggestion</th><th>Topic</th><th>Votes</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+function card(i){return'<article class="card"><div class="vote" style="cursor:default">▲ '+i.v+'<span>votes</span></div><div><h3>'+esc(i.t)+'</h3><p>'+esc(i.d)+'</p><div class="meta"><span class="status '+cls(i.s)+'">'+i.s+'</span><span class="tag">'+i.c+'</span><span>'+i.day+'</span></div></div></article>'}
+function mine(){
+ if(!user)return'<h2 style="margin:12px 0 14px">My ideas</h2><div class="empty">Log in to see the ideas you’ve shared and the ones you’ve backed.<br><br><button class="btn" data-go="login">Log in</button></div>';
+ var m=items.filter(function(i){return i.mine}),v=items.filter(function(i){return voted[i.id]&&!i.mine});
+ return'<h2 style="margin:12px 0 4px">My ideas</h2><p class="hint">Signed in as '+esc(user)+'</p><h3 style="margin:18px 0 8px">Shared by you ('+m.length+')</h3><div class="list">'+(m.map(card).join("")||'<div class="empty">You haven’t shared an idea yet.</div>')+'</div><h3 style="margin:22px 0 8px">Ideas you’ve backed ('+v.length+')</h3><div class="list">'+(v.map(card).join("")||'<div class="empty">Upvote a suggestion and it will show up here.</div>')+'</div>';
+}
+function login(){
+ return'<h2 style="margin:12px 0 14px">Log in</h2><form class="panel" id="lf" novalidate><label for="lr">I am a</label><select class="f" id="lr"><option>Student</option><option>Administrator</option></select><label for="li">College ID or email</label><input type="text" id="li" placeholder="e.g. 21CS104"><label for="lp">Password</label><input type="password" id="lp"><p class="hint">Demo only: any details will work. Nothing is saved.</p><div class="err" id="le" role="alert"></div><button class="btn" type="submit">Log in</button></form>';
+}
+function render(){
+ var a=document.getElementById("app");
+ a.innerHTML=({browse:browse,submit:submit,mine:mine,admin:admin,login:login})[view]();
+ document.querySelector('[data-v="login"]').textContent=user?"Log out":"Log in";
+ document.getElementById("role").textContent=view==="admin"?"Admin view":"Student view";
+ a.querySelectorAll("[data-f]").forEach(function(b){b.onclick=function(){filter=b.dataset.f;render()}});
+ a.querySelectorAll("[data-vote]").forEach(function(b){b.onclick=function(){var i=items.find(function(x){return x.id==b.dataset.vote});if(voted[i.id]){voted[i.id]=false;i.v--}else{voted[i.id]=true;i.v++}render()}});
+ a.querySelectorAll("[data-go]").forEach(function(b){b.onclick=function(){go(b.dataset.go)}});
+ var s=document.getElementById("sort");if(s)s.onchange=function(){sort=s.value;render()};
+ a.querySelectorAll("[data-st]").forEach(function(sel){sel.onchange=function(){items.find(function(x){return x.id==sel.dataset.st}).s=sel.value;render();toast("Status updated")}});
+ var af=document.getElementById("af");
+ if(af)af.onchange=function(){afilter=af.value;render()};
+ var q=document.getElementById("q");
+ if(q)q.oninput=function(){query=q.value;var p=q.selectionStart;render();var n=document.getElementById("q");n.focus();n.setSelectionRange(p,p)};
+ var lf=document.getElementById("lf");
+ if(lf)lf.onsubmit=function(e){e.preventDefault();var id=document.getElementById("li").value.trim();if(!id||!document.getElementById("lp").value){document.getElementById("le").textContent="Enter your ID or email and a password.";return}user=id;toast("Logged in as "+id);go(document.getElementById("lr").value==="Administrator"?"admin":"browse")};
+ var f=document.getElementById("f");
+ if(f)f.onsubmit=function(e){e.preventDefault();var t=document.getElementById("t").value.trim(),d=document.getElementById("d").value.trim();
+  if(!t||d.length<10){document.getElementById("e").textContent="Add a title and at least a short description (10+ characters).";return}
+  items.unshift({id:nextId++,t:t,d:d,c:document.getElementById("c").value,s:"Pending",v:1,by:document.getElementById("a").checked?"Anonymous":"You",day:"Just now",mine:true});
+  voted[nextId-1]=true;filter="All";sort="new";toast("Suggestion submitted");go("browse")};
+}
+render();
+</script>
+</body>
+</html>
